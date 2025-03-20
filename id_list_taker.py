@@ -6,11 +6,25 @@ def get_ids_from_csv(input_path, output_path, id_column):
     if not os.path.exists(input_path):
         print(f"Error: {input_path} does not exist.")
         return
+
     with open(input_path, newline='', encoding='utf-8') as csv_file:
         reader = csv.DictReader(csv_file)
-        ids = [row[id_column] for row in reader if id_column in row]
-        with open(output_path, "w", encoding="utf-8") as f:
-            print("('" + "','".join(map(str, ids)) + "')", file=f)
+
+        # Ensure the specified column exists
+        if id_column not in reader.fieldnames:
+            print(f"Error: Column '{id_column}' not found in {input_path}. Available columns: {', '.join(reader.fieldnames)}")
+            return
+
+        ids = [row[id_column] for row in reader if row[id_column]]
+
+    if not ids:
+        print(f"Warning: No IDs found in column '{id_column}'.")
+        return
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(f"('{','.join(map(str, ids))}')\n")
+
+    print(f"Extracted {len(ids)} IDs and saved to {output_path}.")
 
 def main():
     # Set up the argument parser

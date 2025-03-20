@@ -30,7 +30,7 @@ def main():
     parser = argparse.ArgumentParser(description='Merge two CSV files on different keys.')
     parser.add_argument('file_path1', help='The path to the first CSV file to merge')
     parser.add_argument('file_path2', help='The path to the second CSV file to merge')
-    parser.add_argument('output_path', help='The output_path path to save the merged result')
+    parser.add_argument('output_path', help='The output path to save the merged result')
     parser.add_argument('key1', help='The column name to join the first CSV on')
     parser.add_argument('key2', help='The column name to join the second CSV on')
 
